@@ -6,10 +6,7 @@ The Programs are named `Prog #-#`where `#` denotes the specific program index as
 1. Data Transfer instructions
     1. N word block transfer without overlap
     1. N byte block transfer with overlap(DSTN starting at the 6th byte position of SRC)
-    1. N byte block transfer with overlap(DSTN ends on the 6th byte position of SRC)
     1. Interchange word blocks
-    1. Interchange word blocks using stack operations
-    1. Interchange word blocks using XCHG instruction
 1. Arithmetic Operations
     1. Addition & subtraction of 2 16-bit numbers
     1. Addition of 2 N byte multi precision numbers
