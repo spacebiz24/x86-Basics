@@ -1,38 +1,30 @@
-; check if the given 8-bit data is +ve or -ve and/or odd or even and find the number of 1's and 0's
+; Addition & subtraction of 2 16-bit numbers
 .MODEL SMALL
 .DATA
-    
-    NUM DB -0H
-    RES DB 2 DUP(0H)
-    N_1S DB 0H
-    N_0S DB 8H
+
+    X DW 0FFFFH
+    Y DW 0FFFFH
+    SUM DW 2 DUP(0)
+    DIF DW 2 DUP(0)
 
 .CODE
-    
-    MOV AX,@DATA
-    MOV DS,AX
-    LEA SI,NUM
-    MOV AX,[SI]
-    MOV CX,8H
-    
-PN: ROL AL,1H
-    JNC EO
-    MOV BYTE PTR [RES],1H
 
-EO: MOV AX,[SI]
-    ROR AX,1H
-    MOV AX,[SI]
-    JNC Z1
-    MOV BYTE PTR 1[RES],1H
+START:  MOV AX,@DATA
+        MOV DS,AX
 
-Z1: ROR AX,1H
-    JNC Z2
-    DEC N_0S
-    INC N_1S
-    
-Z2: LOOP Z1
+ADD1:   MOV AX,X
+        ADD AX,Y
+        MOV SUM,AX
+        JNC SUB1
+        INC 2[SUM]
 
-    MOV AH,04CH
-    INT 21H
-    
-    END    
+SUB1:   MOV AX,X
+        SUB AX,Y
+        MOV DIF,AX
+        JNC ED
+        MOV 2[DIF],0FFFFH       
+          
+ED:     MOV AH,04CH
+        INT 21H
+        
+        END START

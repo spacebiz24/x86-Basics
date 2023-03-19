@@ -2,14 +2,14 @@
 
 A few basic x86 programs built to be run on the legendary 8086, the Processor that started the x86 architecture. Run it on a 8086 emulator like [emu8086](https://emu8086-microprocessor-emulator.en.softonic.com/). Enjoy...
 
-The Programs are named `Prog #-#`where `#` denotes the specific program index as shown by the list below. The `(A)` after a program name denotes an assignment.
+The Programs are named `Prog #-#`where `#` denotes the specific program index as shown by the list below.
 1. Data Transfer instructions
     1. N word block transfer without overlap
     1. N byte block transfer with overlap(DSTN starting at the 6th byte position of SRC)
     1. N byte block transfer with overlap(DSTN ends on the 6th byte position of SRC)
+    1. Interchange word blocks
     1. Interchange word blocks using stack operations
     1. Interchange word blocks using XCHG instruction
-    1. Interchange word blocks
 1. Arithmetic Operations
     1. Addition & subtraction of 2 16-bit numbers
     1. Addition of 2 N byte multi precision numbers

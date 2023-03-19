@@ -1,32 +1,28 @@
-; Addition of 2 N byte multi precision numbers
-.MODEL SMALL
+; interchange word blocks using stack operations
 .DATA
-
-    X DB 85H,0BDH,12H,0AAH,0F8H,0DEH,0BCH,7AH
-    Y DB 74H,0C1H,0FDH,7FH,97H,0D3H,56H,8AH
-    Z DB 9 DUP(0)
-
+    X_BLOCK DW 0123H,3456H,789H,0BCDEH,0F231H
+    Y_BLOCK DW 1122H,3344H,5566H,7788H,0AABBH
 .CODE
+
 
 START:  MOV AX,@DATA
         MOV DS,AX
-        LEA SI,X
-        LEA DI,Y
-        LEA BX,Z
-        MOV CX,8H
+        LEA SI,X_BLOCK
+        LEA DI,Y_BLOCK
+        MOV CX,5H
 
-LOOP1:  MOV AL,[SI]
-        ADC AL,[DI]
-        MOV [BX],AL
+LOC1:   PUSH [SI]
+        PUSH [DI]
+        POP  [SI]
+        POP  [DI]
+        INC SI
         INC SI
         INC DI
-        INC BX
-        LOOP LOOP1
-        MOV AL,00
-        RCL AL,1
-        MOV [BX],AL
+        INC DI
+        LOOP LOC1
         
-        MOV AH,4CH
-        INT 21H         
-           
+        MOV AX,04CH
+        INT 21H
+
+
 END START

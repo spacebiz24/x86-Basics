@@ -1,30 +1,24 @@
-; Addition & subtraction of 2 16-bit numbers
-.MODEL SMALL
+; interchange word blocks
 .DATA
-
-    X DW 0FFFFH
-    Y DW 0FFFFH
-    SUM DW 2 DUP(0)
-    DIF DW 2 DUP(0)
-
+    X_BLOCK DW 0123H,3456H,789H,0BCDEH,0F231H
+    Y_BLOCK DW 1122H,3344H,5566H,7788H,0AABBH
 .CODE
 
 START:  MOV AX,@DATA
         MOV DS,AX
-
-ADD1:   MOV AX,X
-        ADD AX,Y
-        MOV SUM,AX
-        JNC SUB1
-        INC 2[SUM]
-
-SUB1:   MOV AX,X
-        SUB AX,Y
-        MOV DIF,AX
-        JNC ED
-        MOV 2[DIF],0FFFFH       
-          
-ED:     MOV AH,04CH
-        INT 21H
+        LEA SI,X_BLOCK
+        LEA DI,Y_BLOCK
+        MOV CX,5H
+LOCI:   MOV AX,[SI]
+        MOV BX,[DI]
+        MOV [DI],AX
+        MOV [SI],BX
+        INC DI
+        INC DI
+        INC SI
+        INC SI
+        LOOP LOCI
         
-        END START
+        MOV AX,04CH
+        INT 21H
+END START

@@ -1,24 +1,26 @@
-; interchange word blocks
+; N byte block transfer with overlap(DSTN starting at the 6th byte position of SRC)
+.MODEL SMALL
 .DATA
-    X_BLOCK DW 0123H,3456H,789H,0BCDEH,0F231H
-    Y_BLOCK DW 1122H,3344H,5566H,7788H,0AABBH
+
+    POS EQU 6
+    SRC_BLK DB 11H,22H,33H,44H,55H,66H,77H,88H,99H,0AH
+    DSTN_BLK DB POS DUP(0)
+
 .CODE
 
 START:  MOV AX,@DATA
         MOV DS,AX
-        LEA SI,X_BLOCK
-        LEA DI,Y_BLOCK
-        MOV CX,5H
-LOCI:   MOV AX,[SI]
-        MOV BX,[DI]
-        MOV [DI],AX
-        MOV [SI],BX
-        INC DI
-        INC DI
-        INC SI
-        INC SI
-        LOOP LOCI
+        LEA SI,SRC_BLK+9
+        LEA DI,DSTN_BLK+(POS-1)
+        MOV CX,10
+
+LOOP1:  MOV AL,[SI]
+        MOV [DI],AL
+        DEC SI
+        DEC DI
+        LOOP LOOP1
         
-        MOV AX,04CH
+        MOV AH,4CH
         INT 21H
-END START
+        
+END START  
